@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>CineVerse · premium stream</title>
+  <!-- Font Awesome 6 (free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- HLS.js for m3u8 -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- LOGIN PAGE -->
+  <div class="auth-container" id="authContainer">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="cine-logo"><i class="fas fa-film"></i></div>
+        <span>CineVerse</span>
+      </div>
+      <div class="toggle-tabs">
+        <button id="loginTab" class="active">Login</button>
+        <button id="signupTab">Register</button>
+      </div>
+
+      <!-- Login form -->
+      <div id="loginForm" class="auth-form">
+        <div class="input-group"><input type="email" placeholder="Email" id="loginEmail" value="user@cine.com"></div>
+        <div class="input-group password-field">
+          <input type="password" placeholder="Password" id="loginPassword" value="123456">
+          <i class="fas fa-eye-slash" id="toggleLoginPassword"></i>
+        </div>
+        <button class="auth-btn" id="loginBtn"><i class="fas fa-sign-in-alt" style="margin-right: 10px;"></i>Sign In</button>
+      </div>
+
+      <!-- Register form -->
+      <div id="signupForm" class="auth-form" style="display: none;">
+        <div class="input-group"><input type="email" placeholder="Email" id="regEmail"></div>
+        <div class="input-group password-field">
+          <input type="password" placeholder="Password" id="regPassword">
+          <i class="fas fa-eye-slash" id="toggleRegPassword"></i>
+        </div>
+        <button class="auth-btn" id="registerBtn"><i class="fas fa-user-plus" style="margin-right: 8px;"></i>Create account</button>
+      </div>
+
+      <!-- Download apps -->
+      <div class="download-apps">
+        <i class="fab fa-google-play"></i>
+        <i class="fab fa-apple"></i>
+        <i class="fas fa-mobile-alt"></i>
+      </div>
+      <p style="text-align: center; color:#8895aa; margin-top: 18px;">Download mobile apps</p>
+    </div>
+  </div>
+
+  <!-- MAIN APP -->
+  <div class="app-container" id="appContainer">
+    <!-- mobile hamburger -->
+    <div class="hamburger" id="hamburgerBtn"><i class="fas fa-bars"></i></div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="logo-area">
+        <a href="#" class="logo-link" id="homeFromLogo">
+          <div class="cine-logo"><i class="fas fa-film"></i></div>
+          <span class="logo-text">CineVerse</span>
+        </a>
+      </div>
+
+      <div class="nav-section">
+        <ul class="menu-main" style="list-style: none;">
+          <!-- Discover -->
+          <li class="menu-item">
+            <div class="menu-link active" id="navDiscover">
+              <i class="fas fa-compass"></i> Discover
+            </div>
+          </li>
+
+          <!-- Movies Dropdown -->
+          <li class="menu-item">
+            <div class="dropdown-header" data-dropdown="moviesDropdown">
+              <span><i class="fas fa-video" style="margin-right: 14px;"></i>Movies</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="dropdown-menu" id="moviesDropdown">
+              <div class="sub-link" data-cat="all-movies">All Movies</div>
+              <div class="sub-link" data-cat="bollywood">Bollywood</div>
+              <div class="sub-link" data-cat="hollywood">Hollywood</div>
+              <div class="sub-link" data-cat="animation">Animation</div>
+              <div class="sub-link" data-cat="korean">Korean</div>
+              <div class="sub-link" data-cat="hindi-dubbed">Hindi Dubbed</div>
+              <div class="sub-link" data-cat="horror">Horror</div>
+              <div class="sub-link" data-cat="indian-bangla">Indian Bangla</div>
+              <div class="sub-link" data-cat="tamil">Tamil</div>
+            </div>
+          </li>
+
+          <!-- TV Shows Dropdown -->
+          <li class="menu-item">
+            <div class="dropdown-header" data-dropdown="tvDropdown">
+              <span><i class="fas fa-tv" style="margin-right: 14px;"></i>TV Shows</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="dropdown-menu" id="tvDropdown">
+              <div class="sub-link" data-cat="all-tv">All TV Shows</div>
+              <div class="sub-link" data-cat="english-tv">English TV Series</div>
+              <div class="sub-link" data-cat="indian-tv">Indian TV Series</div>
+              <div class="sub-link" data-cat="korean-tv">Korean TV Series</div>
+              <div class="sub-link" data-cat="bangla-tv">Bangla TV Series</div>
+              <div class="sub-link" data-cat="turkish-tv">Turkish TV Series</div>
+            </div>
+          </li>
+
+          <!-- Anime -->
+          <li class="menu-item">
+            <div class="menu-link" data-cat="anime">
+              <i class="fas fa-dragon"></i> Anime
+            </div>
+          </li>
+
+          <!-- Home (explicit in menu) -->
+          <li class="menu-item">
+            <div class="menu-link" id="homeInMenu">
+              <i class="fas fa-home"></i> Home
+            </div>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content" id="mainContent">
+      <!-- Profile Icon - Dashboard Top Right Corner -->
+      <div class="dashboard-profile">
+        <div class="profile-wrapper">
+          <div class="profile-icon"><i class="fas fa-user-circle"></i></div>
+          <div class="profile-dropdown">
+            <div class="dropdown-item"><i class="fas fa-user"></i> Profile</div>
+            <div class="dropdown-item"><i class="fas fa-cog"></i> Settings</div>
+            <div class="dropdown-item" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- video player section -->
+      <div class="video-player-section" id="videoPlayerSection">
+        <div class="player-container">
+          <div class="premium-player" id="premiumPlayer">
+            <video id="mainVideo" src="https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"></video>
+            <div class="custom-controls">
+              <button class="ctrl-btn" id="playPauseBtn"><i class="fas fa-play"></i></button>
+              <button class="ctrl-btn" id="volumeBtn"><i class="fas fa-volume-up"></i></button>
+              <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="1">
+              <span class="time-info" id="timeInfo">00:00 / 00:00</span>
+              <button class="ctrl-btn" id="ccBtn"><i class="fas fa-closed-captioning"></i></button>
+              <button class="ctrl-btn" id="fullscreenBtn"><i class="fas fa-expand"></i></button>
+              <div class="quality-badge"><span>1080p</span><span>720p</span></div>
+            </div>
+          </div>
+        </div>
+        <!-- suggested row -->
+        <div class="suggested-row">
+          <div class="suggested-title">Suggested for you</div>
+          <div class="horizontal-scroll" id="suggestedScroll"></div>
+        </div>
+      </div>
+
+      <!-- dashboard grid -->
+      <div id="dashboardDefault">
+        <div class="dashboard-header"><h2 id="categoryTitle">Discover</h2></div>
+        <div class="movie-grid" id="movieGrid"></div>
+      </div>
+
+      <!-- footer with working links -->
+      <footer class="site-footer">
+        <div class="footer-left">
+          <a id="footerHome"><i class="fas fa-home"></i> Home</a>
+          <a href="https://t.me/+3owEnxN3hiZiMjk1" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
+          <a href="https://www.facebook.com/AESTHETICxSHANTO" target="_blank"><i class="fas fa-id-card"></i> Owner ID</a>
+          <a href="https://www.facebook.com/AESTHETICxSHANTO" target="_blank"><i class="fas fa-code"></i> Developer ID</a>
+        </div>
+        <div class="footer-center">Developed by <strong>SHANTO</strong></div>
+      </footer>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
